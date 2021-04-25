@@ -12,5 +12,6 @@ class Font:
         self.font = pygame.font.Font(font, font_size)
 
     def render(self, screen):
+        self.font.set_bold(True)
         msg = self.font.render(self.msg, True, self.color)
         screen.blit(msg, (self.position.x, self.position.y))

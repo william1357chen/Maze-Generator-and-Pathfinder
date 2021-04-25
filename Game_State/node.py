@@ -23,38 +23,19 @@ class Node:
 
     @property
     def state(self):
-        if self.wall:
-            return "wall"
-        else:
-            return "path"
+        return "wall" if self.wall else "path"
 
     @state.setter
     def state(self, value):
-        if value == "wall":
-            self.wall = True
-            self.color = Color.BLACK
-        elif value == "path":
-            self.wall = False
-            self.color = Color.WHITE
+        self.wall = True if value == "wall" else False
 
     @property
     def status(self):
-        if self.visited:
-            return "visited"
-        else:
-            return "unvisited"
+        return "visited" if self.visited else "unvisited"
 
     @status.setter
     def status(self, value):
-        if value == "visited":
-            self.visited = True
-            self.color = Color.LAVENDER
-        else:
-            self.visited = False
-            if self.state == "wall":
-                self.color = Color.BLACK
-            elif self.state == "path":
-                self.color = Color.WHITE
+        self.visited = True if value == "visited" else False
 
     def setup_neighbours(self):
         # set top
@@ -91,8 +72,8 @@ class Node:
     def draw(self, screen):
         pygame.draw.rect(screen, self.color, self.rect)
         # black border
-        pygame.draw.rect(screen, Color.BLACK, self.rect, width=1)
+        pygame.draw.rect(screen, Color.BORDER, self.rect, width=1)
 
     def __repr__(self):
-        return "{} at position: {}}".format(self.status, self.coord)
+        return "{} {} at position: {}".format(self.status, self.state, self.coord)
 

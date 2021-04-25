@@ -47,6 +47,19 @@ class CellCoord:
     def __repr__(self):
         return "CellCoord (col: {}, row: {})".format(self.col, self.row)
 
+class Instruction:
+    def __init__(self, node, color, state=None, status=None):
+        self.node = node
+        self.color = color
+        self.state = state
+        self.status = status
+    def run(self):
+        if self.state is not None:
+            self.node.state = self.state 
+        if self.status is not None:
+            self.node.status = self.status 
+        self.node.color = self.color
+
 def test():
     hi = DisjointSet()
     hi.parent.append(Cell(0, 0, (10, 10)))

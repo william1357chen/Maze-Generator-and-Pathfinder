@@ -24,6 +24,7 @@ current_scene = None
 
 
 def switch_scene(method):
+    print("switch to method", method)
     global current_scene
     current_scene = scene_list[method]
     current_scene.initialize()

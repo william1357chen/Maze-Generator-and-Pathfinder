@@ -62,39 +62,16 @@ class StartMenu(Scene):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # click a checkbox
                 mouse_pos = pygame.mouse.get_pos()
-                self.click_checkbox(mouse_pos)
+                self.game_state.click_checkbox(mouse_pos)
 
                 # click button
-                self.click_button(mouse_pos)
+                self.game_state.click_button(mouse_pos)
 
             if event.type == pygame.MOUSEMOTION:
                 mouse_pos = pygame.mouse.get_pos()
                 self.game_state.button.is_over(mouse_pos)
                 for checkbox in self.game_state.checkbox.values():
                     checkbox.is_over(mouse_pos)
-
-    def click_checkbox(self, mouse_pos):
-        flag = ""
-        for method, checkbox in self.game_state.checkbox.items():
-            clicked = checkbox.is_over(mouse_pos)
-            if clicked:
-                checkbox.checked = not checkbox.checked
-                flag = method
-                break
-        if flag != "":
-            for method in self.game_state.checkbox:
-                if method != flag:
-                    self.game_state.checkbox[method].checked = False
-
-    def click_button(self, mouse_pos):
-        self.game_state.next_scene = None
-        self.game_state.button.is_over(mouse_pos)
-        if not self.game_state.button.mouse_over:
-            return
-        for method, checkbox in self.game_state.checkbox.items():
-            if checkbox.checked:
-                self.game_state.next_scene = method
-                return
 
     def update(self):
         ...

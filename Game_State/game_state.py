@@ -24,15 +24,28 @@ class GameState:
         ]
         self.next_scene = None
 
-    def wall_list(self):
-        lst = []
-        for row in range(Constants.NODE_LENGTH_COUNT):
-            if row != 0 and row != Constants.NODE_LENGTH_COUNT - 1:
-                for col in range(Constants.NODE_WIDTH_COUNT):
-                    if col != 0 and col != Constants.NODE_WIDTH_COUNT - 1:
-                        if col % 2 == 0 and row % 2 == 1 or col % 2 == 1 and row % 2 == 0:
-                            lst.append(CellCoord(col, row))
-        return lst
+    def click_checkbox(self, mouse_pos):
+        flag = ""
+        for method, checkbox in self.checkbox.items():
+            clicked = checkbox.is_over(mouse_pos)
+            if clicked:
+                checkbox.checked = not checkbox.checked
+                flag = method
+                break
+        if flag != "":
+            for method in self.checkbox:
+                if method != flag:
+                    self.checkbox[method].checked = False
+
+    def click_button(self, mouse_pos):
+        self.next_scene = None
+        self.button.is_over(mouse_pos)
+        if not self.button.mouse_over:
+            return
+        for method, checkbox in self.checkbox.items():
+            if checkbox.checked:
+                self.next_scene = method
+                return
 
     def render(self):
         if self.font != None:
